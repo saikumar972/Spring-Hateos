@@ -9,6 +9,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/student")
@@ -36,7 +37,18 @@ public class StudentController {
 //                .slash(studentResponse.getId())
 //                .withRel("verify")
 //                .withType("GET");
-        Link getStudentByIdLink=Link.of("/student/id/"+studentResponse.getId()).withRel("verify").withType("get");
+//        Link getStudentByIdLink=Link.of("/student/id/"+studentResponse.getId()).withRel("verify").withType("get");
+        // Create a fully qualified URL using ServletUriComponentsBuilder
+        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .build()
+                .toUriString();
+        String fullUrl = baseUrl + "/student/id/" + studentResponse.getId();
+
+        // Create the link with the fully qualified URL
+        Link getStudentByIdLink = Link.of(fullUrl)
+                .withRel("verify")
+                .withType("GET");
+
         studentResponse.addLink(getStudentByIdLink);
         return ResponseEntity.ok(studentResponse);
     }
