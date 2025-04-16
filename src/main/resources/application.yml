@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/transaction
+    username: root
+    password: root123
+
+  jpa:
+    show-sql: true
+    properties:
+      format-sql: true
+      dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+
+
+
+server:
+  port: 8090
